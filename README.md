@@ -10,4 +10,4 @@ Second, run the development server:
 yarn start
 ```
 
-## 接口和跨域设置均在等待NLP接口中
+## 接口对接已完成，启动脚本命令即可

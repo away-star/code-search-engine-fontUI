@@ -134,22 +134,6 @@ function SearchBox() {
                             <Divider/>
                         </div>)
                 })}
-
-
-                {/*  <p>result 1</p>
-                <SyntaxHighlighter language="javascript" style={dark}>{"func = lambda size, kernel=3, stride=1, padding=0: ((size - kernel + 2 * padding) / stride + 1)\n" +
-                    "        x = func(func(self.options[1]), kernel=2)\n" +
-                    "        x = func(func(x), kernel=2)\n" +
-                    "        x = func(func(x), kernel=2)\n" +
-                    "        x = func(func(x), kernel=2)\n" +
-                    "        y = func(func(self.options[2]), kernel=2)\n" +
-                    "        y = func(func(y), kernel=2)\n" +
-                    "        y = func(func(y), kernel=2)\n" +
-                    "        y = func(func(y), kernel=2)\n" +
-                    "        x = int(x)\n" +
-                    "        y = int(y)\n"}
-                </SyntaxHighlighter>
-                <Divider/>*/}
             </div>
         </div>
     );
