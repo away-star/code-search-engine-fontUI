@@ -5,12 +5,63 @@ import {Option} from "rc-select";
 import styles from './index.less'
 import SearchBtn from "@/components/SearchBtn";
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
-import {dark, tomorrow, twilight, pojoaque} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import {
+    dark,
+    tomorrow,
+    twilight,
+    pojoaque,
+    darcula,
+    coldarkCold,
+    gruvboxLight
+} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {MOCK_DATA, NLP_URL} from "@/constant";
 import {getData} from "@/service/api";
 
+function verifyData(oldData: string[]) {
+    let newData: string[] = [];
+
+    for (let i = 0; i < oldData.length; i++) {
+
+        //对数据进行处理
+        let startQuoteIndex: number = oldData[i].indexOf(",");  // 查找第一个单引号的位置
+        let endQuoteIndex: number = oldData[i].lastIndexOf(",");  // 查找最后一个单引号的位置
+        newData[i] = oldData[i].slice(startQuoteIndex + 1, endQuoteIndex);
+        newData[i] = newData[i].substring(1, newData[i].length - 1);
+        newData[i] = newData[i].substring(1, newData[i].length - 1);
+        newData[i] = newData[i].replace(/\\n/g, "\n");
+        newData[i] = newData[i].replace(/\\+$/, "");
+        newData[i] = newData[i].trim()
+        console.log(typeof newData[i])
+    }
+    return newData
+}
+
+
+function codeStyle(index: number) {
+    switch (index % 8) {
+        case 0:
+            return dark;
+        case 1:
+            return tomorrow;
+        case 2:
+            return twilight;
+        case 3:
+            return pojoaque;
+        case 4:
+            return tomorrow;
+        case 5:
+            return darcula;
+        case 6:
+            return coldarkCold;
+        case 7:
+            return gruvboxLight;
+        default:
+            return tomorrow;
+    }
+}
+
 function SearchBox() {
-    const [data, setData] = useState<string[]>([]);//展示数据
+    const [data, setData] = useState<string[]>();//展示数据
     const [searchContent, setSearchContent] = useState()//搜索内容
     const [type, setType] = useState<string>('python')//搜索语言类型
 
@@ -18,15 +69,17 @@ function SearchBox() {
         console.log(66)
         if (type === undefined) {
             message.error("请选择语言类型");
-        } else if (searchContent === undefined || searchContent==='') {
+        } else if (searchContent === undefined || searchContent === '') {
             message.error("请输入搜索内容");
-        } else if (NLP_URL === '') {
+        } else if (NLP_URL === undefined) {
             //假数据展示
-            setData(MOCK_DATA)
+            //setData('def apply_something(something, config, some_var):\n    pass  # ...\n\nimport functools\n\nreduce(functools.partial(apply_something, some_var=True), \n       [1, 2, 3], something_initializer)\n')
 
         } else {
             //todo 此处根据返回的数据情况赋值给data进行展示
             const response = await getData({searchContent, type})
+            //setData(response.data)
+            setData(verifyData(response.data))
         }
     }
 
@@ -69,14 +122,17 @@ function SearchBox() {
 
             {/*结果展示区域*/}
             <div className={styles.result}>
-                {data.map((item, index) => {
-                    return (<div>
-                        <p>result {index + 1}</p>
-                        <SyntaxHighlighter language="javascript" style={index % 2 === 0 ? dark : tomorrow}>
-                            {item}
-                        </SyntaxHighlighter>
-                        <Divider/>
-                    </div>)
+                {data?.map((item: string, index) => {
+                    return (
+                        <div style={{whiteSpace: "pre-wrap"}}>
+                            <p>result {index + 1}</p>
+                            <SyntaxHighlighter
+                                //className={styles.codeLine}
+                                language="python" style={codeStyle(index)}>
+                                {item}
+                            </SyntaxHighlighter>
+                            <Divider/>
+                        </div>)
                 })}
 
 

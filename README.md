@@ -10,5 +10,4 @@ Second, run the development server:
 yarn start
 ```
 
-## 接口未接上  请联系作者
-
+## 接口和跨域设置均在等待NLP接口中

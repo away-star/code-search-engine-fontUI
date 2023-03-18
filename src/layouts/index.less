@@ -1,20 +1,23 @@
-.main{
+.main {
   margin-top: 100px;
   position: relative;
-  .searchBox{
+
+  .searchBox {
     display: flex; /* 弹性布局 */
     justify-content: center; /* 水平居中 */
   }
 
   //logo样式
-  .logo{
+  .logo {
     display: flex; /* 弹性布局 */
     justify-content: center; /* 水平居中 */
     margin-bottom: 20px;
+
     .loader {
       width: 80*4px;
       height: 50*2.5px;
       position: relative;
+
       .text {
         position: absolute;
         top: 0;
@@ -25,6 +28,7 @@
         font-size: 0.8*2.5rem;
         letter-spacing: 1px;
       }
+
       .load {
         background-color: #9A79FF;
         border-radius: 50px;
@@ -36,7 +40,7 @@
         transform: translateX(64px);
         animation: loading_713 3.5s ease both infinite;
 
-        &::before{
+        &::before {
           position: absolute;
           content: "";
           width: 100%;
@@ -51,9 +55,62 @@
 
 
   //结果展示样式
-  .result{
+  .result {
     width: 60%;
     margin: auto;
+    p {
+      //background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+      //animation: rainbow 5s ease-in-out infinite;
+      background-color: #83b3cb;
+      border-radius: 10px;
+      font-size: 1.5rem;
+      text-align: center;
+      line-height: 30px;
+      font-weight: bold;
+     // animation: rainbow-text 2s ease-in-out infinite;
+    }
+  }
+}
+
+.codeLine {
+  code {
+    white-space: pre-line;
+  }
+}
+
+@keyframes rainbow-text {
+  0% {
+    color: violet;
+  }
+  16% {
+    color: orange;
+  }
+  32% {
+    color: indigo;
+  }
+  48% {
+    color: green;
+  }
+  64% {
+    color: blue;
+  }
+  80% {
+    color: indigo;
+  }
+  100% {
+    color: violet;
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 

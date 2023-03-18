@@ -1,5 +1,5 @@
 
-export const NLP_URL = '';//NLP接口地址
+export const NLP_URL = '/api/result';//NLP接口地址
 export const NLP_METHOD = 'GET';//请求方式
 
 
@@ -95,6 +95,7 @@ export const MOCK_DATA = [
     'test_data = mnist.MNIST(data_path, train=False, transform=data_tf, download=False)\n' +
     'train_loader = data.DataLoader(train_data, batch_size=128, shuffle=True)\n' +
     'test_loader = data.DataLoader(test_data, batch_size=128, shuffle=True)\n'
+
 ];
 
 

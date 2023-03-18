@@ -7,12 +7,12 @@ export default defineConfig({
   ],
   npmClient: 'yarn',
 
-  //todo 跨域配置
+  // todo 跨域配置
   proxy: {
-    '/api': {
-      'target': '',
+    '/api/': {
+      'target': 'http://localhost:5000',
       'changeOrigin': true,
-      'pathRewrite': { '^/api' : '' },
+      'pathRewrite': { 'api' : '' },
     }
   }
 });
