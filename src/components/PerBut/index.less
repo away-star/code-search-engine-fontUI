@@ -1,0 +1,50 @@
+.box {
+  --border-radius: 4vmin;
+  --bg: #3A3544;
+  --color: #D0BCFF;
+  --deg: 30deg;
+  -webkit-perspective: 200px;
+  perspective: 200px;
+  -webkit-transform-origin: top center;
+  -ms-transform-origin: top center;
+  transform-origin: top center;
+  max-width: 250px;
+  text-align: center;
+  outline: none;
+  border: none;
+  background: none;
+
+  .button {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform: rotateY(var(--deg));
+    transform: rotateY(var(--deg));
+    -webkit-transition: all 800ms ease-in-out;
+    transition: all 800ms ease-in-out;
+    border-radius: var(--border-radius);
+    font-style: normal;
+    border: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 1.0vmin;
+    letter-spacing: 0.03vmin;
+    padding: 0.5vmin 1.0vmin;
+    background: var(--bg);
+    color: var(--color);
+
+    &:hover {
+      -webkit-transform: rotateY(calc(-1 * var(--deg)));
+      transform: rotateY(calc(-1 * var(--deg)));
+    }
+
+    &:active {
+      -webkit-transform: rotateY(calc(-1 * var(--deg) / 3));
+      transform: rotateY(calc(-1 * var(--deg) / 3));
+    }
+
+    &:focus {
+      border: 0.05vmin solid var(--color);
+    }
+  }
+}

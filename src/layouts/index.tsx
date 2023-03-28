@@ -4,6 +4,9 @@ import TextArea from "antd/es/input/TextArea";
 import {Option} from "rc-select";
 import styles from './index.less'
 import SearchBtn from "@/components/SearchBtn";
+import ResultBut from "@/components/ResultBut";
+import ResultBut1 from "@/components/ResultBut1";
+import PerBut from "@/components/PerBut";
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {
     dark,
@@ -14,26 +17,37 @@ import {
     coldarkCold,
     gruvboxLight
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import {MOCK_DATA, NLP_URL} from "@/constant";
+import {MOCK_DATA, MOCK_DATA_python_merge, MOCK_DATA_python_sys, NLP_URL} from "@/constant";
 import {getData} from "@/service/api";
 
 function verifyData(oldData: string[]) {
-    let newData: string[] = [];
+    let newData: CodeData[] = [];
+   // let similarity: number[] = [];
 
     for (let i = 0; i < oldData.length; i++) {
-
+        //console.log(oldData[i])
         //对数据进行处理
         let startQuoteIndex: number = oldData[i].indexOf(",");  // 查找第一个单引号的位置
         let endQuoteIndex: number = oldData[i].lastIndexOf(",");  // 查找最后一个单引号的位置
-        newData[i] = oldData[i].slice(startQuoteIndex + 1, endQuoteIndex);
-        newData[i] = newData[i].substring(1, newData[i].length - 1);
-        newData[i] = newData[i].substring(1, newData[i].length - 1);
-        newData[i] = newData[i].replace(/\\n/g, "\n");
-        newData[i] = newData[i].replace(/\\+$/, "");
-        newData[i] = newData[i].trim()
-        console.log(typeof newData[i])
+        //console.log(oldData[i].slice(startQuoteIndex + 1, endQuoteIndex))
+        newData[i] = {code: '', similar: ''};
+        newData[i].code = oldData[i].slice(startQuoteIndex + 1, endQuoteIndex);
+        newData[i].code = newData[i].code.substring(1, newData[i].code.length - 1);
+        newData[i].code = newData[i].code.substring(1, newData[i].code.length - 1);
+        newData[i].code = newData[i].code.replace(/\\n/g, "\n");
+        newData[i].code = newData[i].code.replace(/\\+$/, "");
+        newData[i].code = newData[i].code.trim();
+
+        //计算相似度
+        // console.log(oldData[i].slice(endQuoteIndex+2, oldData[i].length-1))
+        const xxx: CodeData = {
+            code: newData[i].code,
+            similar: ((100-(+oldData[i].slice(endQuoteIndex + 2, oldData[i].length - 1))*100).toString().slice(0,6))+'%'
+        }
+       // console.log(1-(+xxx.similar));
+        newData[i]=xxx;
     }
-    return newData
+    return newData;
 }
 
 
@@ -60,8 +74,13 @@ function codeStyle(index: number) {
     }
 }
 
+export interface CodeData {
+    code: string;
+    similar: string
+}
+
 function SearchBox() {
-    const [data, setData] = useState<string[]>();//展示数据
+    const [data, setData] = useState<CodeData[]>();//展示数据
     const [searchContent, setSearchContent] = useState()//搜索内容
     const [type, setType] = useState<string>('python')//搜索语言类型
 
@@ -80,6 +99,7 @@ function SearchBox() {
             const response = await getData({searchContent, type})
             //setData(response.data)
             setData(verifyData(response.data))
+            //setData(MOCK_DATA_python_sys)
         }
     }
 
@@ -105,11 +125,6 @@ function SearchBox() {
 
             {/*搜索区域*/}
             <div className={styles.searchBox}>
-                <Select defaultValue="python" style={{width: '10%',}} onChange={typeChange}>
-                    {/*   <Option children={}></Option>*/}
-                    <Option value="python">python</Option>
-                    <Option value="sql">sql</Option>
-                </Select>
                 <TextArea
                     style={{width: '50%', marginRight: 20, borderRadius: 20}}
                     autoSize={{minRows: 2, maxRows: 10}}
@@ -118,22 +133,36 @@ function SearchBox() {
                 />
                 <SearchBtn onclick={fetchData}/>
             </div>
+            <div className={styles.searchBox}>
+                <Select defaultValue="python" style={{width: '10%', marginRight: 10, marginBottom: 20}}
+                        onChange={typeChange}>
+                    {/*   <Option children={}></Option>*/}
+                    <Option value="python">python</Option>
+                    <Option value="sql">sql</Option>
+                </Select>
+            </div>
             <Divider/>
 
             {/*结果展示区域*/}
             <div className={styles.result}>
-                {data?.map((item: string, index) => {
-                    return (
-                        <div style={{whiteSpace: "pre-wrap"}}>
-                            <p>result {index + 1}</p>
-                            <SyntaxHighlighter
-                                //className={styles.codeLine}
-                                language="python" style={codeStyle(index)}>
-                                {item}
-                            </SyntaxHighlighter>
-                            <Divider/>
-                        </div>)
-                })}
+                {data?.map((item, index) => {
+                        return (
+                            <div style={{whiteSpace: "pre-wrap"}}>
+                                <div className={styles.head}>
+                                    <ResultBut1 text={"result " + (index + 1)}/>
+                                    {/*<span>result {index + 1}</span>*/}
+                                    <PerBut text={item.similar}/>
+                                </div>
+                                <SyntaxHighlighter
+                                    //className={styles.codeLine}
+                                    language="python" style={codeStyle(index)}>
+                                    {item.code}
+                                </SyntaxHighlighter>
+                                <Divider/>
+                            </div>
+                        )
+                    }
+                )}
             </div>
         </div>
     );
