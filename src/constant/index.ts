@@ -20,7 +20,7 @@ export const MOCK_DATA_python_merge: CodeData[] = [
             ">>> pycon |= europython\n" +
             ">>> pycon\n" +
             "{2016: 'Portland', 2018: 'Edinburgh', 2017: 'Rimini', 2019: 'Basel'}",
-        similar: '0.9'
+        similar: '93.654%'
     },
     {
         code: ">>> x = {'a':1, 'b': 2}\n" +
@@ -32,14 +32,14 @@ export const MOCK_DATA_python_merge: CodeData[] = [
             "{'c': 11, 'b': 10}\n" +
             ">>> z\n" +
             "{'a': 1, 'c': 11, 'b': 10}",
-        similar: ""
+        similar: "87.269%"
     },
     {
         code: ">>> d = {'spam': 1, 'eggs': 2, 'cheese': 3}\n" +
             ">>> e = {'cheese': 'cheddar', 'aardvark': 'Ethel'}\n" +
             ">>> d | e\n" +
             "{'spam': 1, 'eggs': 2, 'cheese': 'cheddar', 'aardvark': 'Ethel'}",
-        similar: ""
+        similar: "82.635%"
     },
     {
         code: "class MergeDict(object):\n" +
@@ -86,14 +86,14 @@ export const MOCK_DATA_python_merge: CodeData[] = [
             "\n" +
             "  def values(self):\n" +
             "    return list(v for _, v in self.iteritems())",
-        similar: ""
+        similar: "79.362%"
     },
     {
         code: ">>> from functools import reduce\n" +
             ">>> l = [{'a': 1}, {'b': 2}, {'a': 100, 'c': 3}]\n" +
             ">>> reduce(lambda x, y: {**x, **y}, l, {})\n" +
             "{'a': 100, 'b': 2, 'c': 3}",
-        similar: ""
+        similar: "75.466%"
     },
 ];
 
@@ -121,7 +121,7 @@ export const MOCK_DATA_python_quick: CodeData[] = [
             "    # Note that you want equal ^^^^^ not pivot\n" +
             "    else:  # You need to handle the part at the end of the recursion - when you only have one element in your array, just return the array.\n" +
             "        return array",
-        similar: ""
+        similar: "89.865%"
     },
     {
         code: "array = [97, 200, 100, 101, 211, 107]\n" +
@@ -149,7 +149,7 @@ export const MOCK_DATA_python_quick: CodeData[] = [
             "        _quicksort(array, begin, pivot-1)\n" +
             "        _quicksort(array, pivot+1, end)\n" +
             "    return _quicksort(array, begin, end)",
-        similar: ""
+        similar: "87.121%"
     },
     {
         code: "def qsort(arr):\n" +
@@ -159,7 +159,7 @@ export const MOCK_DATA_python_quick: CodeData[] = [
             "        return qsort([x for x in arr[1:] if x < arr[0]])\n" +
             "        + [arr[0]]\n" +
             "        + qsort([x for x in arr[1:] if x >= arr[0]])",
-        similar: ""
+        similar: "85.951%"
     },
     {
         code: "import random\n" +
@@ -192,7 +192,7 @@ export const MOCK_DATA_python_quick: CodeData[] = [
             "            i, j = i + 1, j - 1\n" +
             "    qsort(xs, fst, j)\n" +
             "    qsort(xs, i, lst)",
-        similar: ""
+        similar: "81.346%"
     },
     {
         code: "def qsort(xs):\n" +
@@ -202,7 +202,7 @@ export const MOCK_DATA_python_quick: CodeData[] = [
             "    head = qsort([x for x in xs if x < pivot])\n" +
             "    tail = qsort([x for x in xs if x > pivot])\n" +
             "    return head + [x for x in xs if x == pivot] + tail",
-        similar: ""
+        similar: "80.331%"
     },
 
 ]
@@ -214,7 +214,7 @@ export const MOCK_DATA_sql_delete: CodeData[] = [
             "INNER JOIN Employee e\n" +
             "  ON EmployeeRun=EmployeeNo\n" +
             "WHERE Company = '1' AND Date = '2013-05-06'",
-        similar: ""
+        similar: "91.364%"
     },
     {
         code: "   DELETE WorkRecord2 \n" +
@@ -223,7 +223,7 @@ export const MOCK_DATA_sql_delete: CodeData[] = [
             "        ON EmployeeRun=EmployeeNo\n" +
             "     WHERE Company = '1' \n" +
             "       AND Date = '2013-05-06';",
-        similar: ""
+        similar: "87.936%"
     },
     {
         code: "DELETE FROM dbo.WorkRecord2\n" +
@@ -232,7 +232,7 @@ export const MOCK_DATA_sql_delete: CodeData[] = [
             "    FROM dbo.Employee e\n" +
             "    WHERE ...\n" +
             ")",
-        similar: ""
+        similar: "86.215%"
     },
     {
         code: "DELETE FROM WorkRecord2 \n" +
@@ -240,13 +240,13 @@ export const MOCK_DATA_sql_delete: CodeData[] = [
             "Where EmployeeRun=EmployeeNo\n" +
             "      And Company = '1' \n" +
             "      AND Date = '2013-05-06'",
-        similar: ""
+        similar: "80.311%"
     },
     {
         code: "SELECT Contact.Naam_Contactpersoon, Bedrijf.BedrijfsNaam, Bedrijf.Adres, Bedrijf.Postcode\n" +
             "FROM Contact\n" +
             "INNER JOIN Bedrijf ON Bedrijf.IDBedrijf = Contact.IDbedrijf",
-        similar: ""
+        similar: "77.654%"
     },
 ]
 
@@ -260,8 +260,8 @@ export const MOCK_DATA_sql_duplicate: CodeData[] = [
             "    name, email\n" +
             "HAVING \n" +
             "    COUNT(*) > 1",
-        similar: ""
-    },{
+        similar: "89.361%"
+    }, {
         code: "declare @YourTable table (id int, name varchar(10), email varchar(50))\n" +
             "\n" +
             "INSERT @YourTable VALUES (1,'John','John-email')\n" +
@@ -276,19 +276,19 @@ export const MOCK_DATA_sql_duplicate: CodeData[] = [
             "    FROM @YourTable\n" +
             "    GROUP BY name,email\n" +
             "    HAVING COUNT(*)>1",
-        similar: ""
-    },{
+        similar: "87.163%"
+    }, {
         code: "SELECT name, email\n" +
             "FROM users\n" +
             "GROUP BY name, email\n" +
             "HAVING ( COUNT(*) > 1 )",
-        similar: ""
-    },{
+        similar: "84.629%"
+    }, {
         code: "SELECT id, name, email \n" +
             "FROM users u, users u2\n" +
             "WHERE u.name = u2.name AND u.email = u2.email AND u.id > u2.id",
-        similar: ""
-    },{
+        similar: "81.366%"
+    }, {
         code: "SELECT  *\n" +
             "FROM    (\n" +
             " SELECT a.*\n" +
@@ -323,7 +323,7 @@ export const MOCK_DATA_sql_duplicate: CodeData[] = [
             " HAVING count(*) > 1\n" +
             ")\n" +
             "ORDER   BY 1;",
-        similar: ""
+        similar: "76.321%"
     },
 ]
 
@@ -336,13 +336,13 @@ export const MOCK_DATA_python_sys: CodeData[] = [
             "    print(\"File exists and is readable\")\n" +
             "else:\n" +
             "    print(\"Either the file is missing or not readable\")",
-        similar: ""
-    },{
+        similar: "89.684%"
+    }, {
         code: "import os\n" +
             "os.path.exists(path) # Returns whether the path (directory or file) exists or not\n" +
             "os.path.isfile(path) # Returns whether the file exists or not",
-        similar: ""
-    },{
+        similar: "86.184%"
+    }, {
         code: "def exists(path):\n" +
             "    \"\"\"Test whether a path exists.  Returns False for broken symbolic links\"\"\"\n" +
             "    try:\n" +
@@ -350,16 +350,16 @@ export const MOCK_DATA_python_sys: CodeData[] = [
             "    except os.error:\n" +
             "        return False\n" +
             "    return True",
-        similar: ""
-    },{
+        similar: "83.674%"
+    }, {
         code: "import os\n" +
             "fname = \"foo.txt\"\n" +
             "if os.path.isfile(fname):\n" +
             "    print(\"file does exist at this time\")\n" +
             "else:\n" +
             "    print(\"no such file exists at this time\")",
-        similar: ""
-    },{
+        similar: "81.136%"
+    }, {
         code: "import os\n" +
             "#Your path here e.g. \"C:\\Program Files\\text.txt\"\n" +
             "#For access purposes: \"C:\\\\Program Files\\\\text.txt\"\n" +
@@ -367,6 +367,6 @@ export const MOCK_DATA_python_sys: CodeData[] = [
             "    print \"File found!\"\n" +
             "else:\n" +
             "    print \"File not found!\"",
-        similar: ""
+        similar: "76.366%"
     },
-    ]
+]

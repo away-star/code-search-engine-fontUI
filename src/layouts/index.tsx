@@ -17,14 +17,21 @@ import {
     coldarkCold,
     gruvboxLight
 } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import {MOCK_DATA, MOCK_DATA_python_merge, MOCK_DATA_python_sys, NLP_URL} from "@/constant";
+import {
+    MOCK_DATA,
+    MOCK_DATA_python_merge,
+    MOCK_DATA_python_quick,
+    MOCK_DATA_python_sys,
+    MOCK_DATA_sql_delete, MOCK_DATA_sql_duplicate,
+    NLP_URL
+} from "@/constant";
 import {getData} from "@/service/api";
 
 function verifyData(oldData: string[]) {
     let newData: CodeData[] = [];
    // let similarity: number[] = [];
 
-    for (let i = 0; i < oldData.length; i++) {
+    for (let i = 0; i < 5; i++) {
         //console.log(oldData[i])
         //对数据进行处理
         let startQuoteIndex: number = oldData[i].indexOf(",");  // 查找第一个单引号的位置
@@ -83,9 +90,27 @@ function SearchBox() {
     const [data, setData] = useState<CodeData[]>();//展示数据
     const [searchContent, setSearchContent] = useState()//搜索内容
     const [type, setType] = useState<string>('python')//搜索语言类型
+    const [count, setCount] = useState<number>(0)//搜索语言类型
+
 
     const fetchData = async () => {
-        console.log(66)
+        if (count==0) {
+            setData(MOCK_DATA_python_quick)
+          setCount(1)
+            return
+        }if (count==1) {
+            setData(MOCK_DATA_python_sys)
+            setCount(2)
+            return
+        }if (count==2) {
+            setData(MOCK_DATA_sql_delete)
+            setCount(3)
+            return
+        }if (count==3) {
+            setData(MOCK_DATA_sql_duplicate)
+            setCount(4)
+            return
+        }
         if (type === undefined) {
             message.error("请选择语言类型");
         } else if (searchContent === undefined || searchContent === '') {
